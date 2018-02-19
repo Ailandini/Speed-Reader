@@ -1,0 +1,28 @@
+﻿<Window x:Class="Speed_Reader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Speed_Reader"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid Background="DarkBlue">
+
+
+        <Grid Name="Page1" Visibility ="Visible">
+            <TextBox HorizontalAlignment="Left" Name="FileName" Height="23" Margin="10,221,0,0" TextWrapping="Wrap" IsReadOnly="True" Text="" VerticalAlignment="Top" Width="316"/>
+            <TextBlock HorizontalAlignment="Left" Name="Instructions" Margin="10,189,0,0" TextWrapping="Wrap" Text="Please select the file you would like to speed read:" VerticalAlignment="Top" Foreground="White" Width="351" Height="27"/>
+            <TextBlock HorizontalAlignment="Left" Name="Title" Margin="10,15,0,0" TextWrapping="Wrap" Text="Speed Reader 1.0" VerticalAlignment="Top" Height="87" Foreground="LightBlue" Width="409" FontSize="48"/>
+            <Button Content="Browse" Name="BrowseButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="331,221,0,0" Height="23" Click="BrowseButton_Click"/>
+            <Button Content="Submit" Name="SubmitButton" HorizontalAlignment="Left" Margin="411,221,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="SubmitButton_Click"/>
+        </Grid>
+        <Grid Name="Page2" Visibility="Hidden">
+            <TextBox HorizontalAlignment="Left" Name="WordPane" Height="114" Margin="0,102,0,0" TextWrapping="Wrap" IsReadOnly="True" Text="TextBox" VerticalAlignment="Top" Width="517" Foreground="DarkOrange" Background="Black" FontSize="72" TextAlignment="Center" BorderBrush="White"/>
+            <Button Content="Reset" Name="ResetButton" HorizontalAlignment="Left" Margin="39,251,0,0" VerticalAlignment="Top" Width="83" Height="34" Click="ResetButton_Click"/>
+            <Button HorizontalAlignment="Left" Name="SPButton" Content="Start/Pause" Margin="148,251,0,0" VerticalAlignment="Top" Width="83" Height="34" Click="SPButton_Click"/>
+            <TextBlock HorizontalAlignment="Left" Margin="336,255,0,0" TextWrapping="Wrap" Foreground="White" Text="WPM:" VerticalAlignment="Top" Height="25" Width="60" FontSize="20"/>
+            <Button Content="Back" Name="BackButton" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="33" Click="BackButton_Click"/>
+            <TextBox HorizontalAlignment="Left" Height="31" Name ="WPM" Margin="401,254,0,0" TextWrapping="Wrap" Foreground="DarkRed" Background="DarkBlue" BorderBrush="DarkBlue" Text="200" Width="62" FontSize="22" VerticalAlignment="Top" TextAlignment="Center" FontWeight="Bold"/>
+        </Grid>
+    </Grid>
+</Window>
