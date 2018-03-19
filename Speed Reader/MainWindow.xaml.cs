@@ -22,7 +22,7 @@ namespace Speed_Reader
     /// </summary>
     public partial class MainWindow : Window
     {
-        Boolean paused = false;
+        Boolean needSpace = false;
         String[] fileWords;
         System.Timers.Timer timer = new System.Timers.Timer();
         int place = 1;
@@ -51,8 +51,11 @@ namespace Speed_Reader
                 System.IO.StreamReader file = new System.IO.StreamReader(FileName.Text);
                 Page1.Visibility = Visibility.Hidden;
                 String fileContent = file.ReadToEnd();
-                fileContent.Replace('\n', ' ');
+                fileContent = fileContent.Replace("\n", " ");
                 fileWords = fileContent.Split(' ');
+                //System.IO.StreamWriter outputfile = new System.IO.StreamWriter("C:\\Users\\landini\\Desktop\\output");
+                //outputfile.Write(fileWords);
+                //return;
                 WordPane.Text = fileWords[0];
                 Page2.Visibility = Visibility.Visible;
 
@@ -60,6 +63,8 @@ namespace Speed_Reader
                 timer.Elapsed += OnTimedEvent;
                 timer.Enabled = false;
                 BackButton.IsEnabled = false;
+
+                wordCountEnd.Text = "of " + Convert.ToString(fileWords.Length);
             }
             catch (Exception except)
             {
@@ -77,10 +82,22 @@ namespace Speed_Reader
                 {
                     timer.Enabled = false;
                 }
+                else if(!needSpace)
+                {
+                    wordCountStart.Text = Convert.ToString(place);
+                    WordPane.Text = fileWords[place];
+                    
+                    if (fileWords[place].EndsWith("."))
+                    {
+                        needSpace = true;
+                    }
+                    place++;
+                    
+                }
                 else
                 {
-                    WordPane.Text = fileWords[place];
-                    place++;
+                    WordPane.Text = " ";
+                    needSpace = false;
                 }
             });
         }
@@ -93,33 +110,40 @@ namespace Speed_Reader
                 {
                     timer.Enabled = false;
                     WPM.IsEnabled = true;
+                    wordCountStart.IsEnabled = true;
                     BackButton.IsEnabled = true;
                 }
                 else
                 {
+
                     try
                     {
                         timer.Interval = 1000 / (Int32.Parse(WPM.Text) / 60);
                         timer.Enabled = true;
+                        wordCountStart.IsEnabled = false;
                         WPM.IsEnabled = false;
                         BackButton.IsEnabled = false;
+
+
+
                     }
                     catch (DivideByZeroException)
                     {
                         WPM.Text = "200";
                     }
-                }
+                }    
             }
         }
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
             WordPane.Text = fileWords[0];
-            paused = true;
             timer.Enabled = false;
             WPM.IsEnabled = true;
+            wordCountStart.IsEnabled = true;
             BackButton.IsEnabled = true;
             place = 1;
+            wordCountStart.Text = "1";
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -128,6 +152,39 @@ namespace Speed_Reader
             Page1.Visibility = Visibility.Visible;
         }
 
-        
+        private void wordCountStart_TextChanged(object sender, TextChangedEventArgs e)
+        {
+           
+            try
+            {
+                
+               
+                place = Convert.ToInt32(wordCountStart.Text);
+                if (place > fileWords.Length)
+                {
+                    WordPane.Text = fileWords[fileWords.Length - 1];
+                    wordCountStart.Text = Convert.ToString(fileWords.Length);
+                }
+                else if (place < 1)
+                {
+                    WordPane.Text = fileWords[0];
+                    wordCountStart.Text = "1";
+                }
+                else
+                {
+                    WordPane.Text = fileWords[Convert.ToInt32(wordCountStart.Text) - 1];
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
+
+        private void BackwordButton_Click(object sender, RoutedEventArgs e)
+        {
+            wordCountStart.Text = Convert.ToString(Convert.ToInt32(wordCountStart.Text) - 1);
+        }
     }
 }

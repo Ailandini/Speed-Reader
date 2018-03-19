@@ -12,17 +12,20 @@
         <Grid Name="Page1" Visibility ="Visible">
             <TextBox HorizontalAlignment="Left" Name="FileName" Height="23" Margin="10,221,0,0" TextWrapping="Wrap" IsReadOnly="True" Text="" VerticalAlignment="Top" Width="316"/>
             <TextBlock HorizontalAlignment="Left" Name="Instructions" Margin="10,189,0,0" TextWrapping="Wrap" Text="Please select the file you would like to speed read:" VerticalAlignment="Top" Foreground="White" Width="351" Height="27"/>
-            <TextBlock HorizontalAlignment="Left" Name="Title" Margin="10,15,0,0" TextWrapping="Wrap" Text="Speed Reader 1.0" VerticalAlignment="Top" Height="87" Foreground="LightBlue" Width="409" FontSize="48"/>
+            <TextBlock HorizontalAlignment="Left" Name="Title" Margin="10,15,0,0" TextWrapping="Wrap" Text="Speed Reader 1.2" VerticalAlignment="Top" Height="87" Foreground="LightBlue" Width="409" FontSize="48"/>
             <Button Content="Browse" Name="BrowseButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="331,221,0,0" Height="23" Click="BrowseButton_Click"/>
             <Button Content="Submit" Name="SubmitButton" HorizontalAlignment="Left" Margin="411,221,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="SubmitButton_Click"/>
         </Grid>
         <Grid Name="Page2" Visibility="Hidden">
             <TextBox HorizontalAlignment="Left" Name="WordPane" Height="114" Margin="0,102,0,0" TextWrapping="Wrap" IsReadOnly="True" Text="TextBox" VerticalAlignment="Top" Width="517" Foreground="DarkOrange" Background="Black" FontSize="72" TextAlignment="Center" BorderBrush="White"/>
-            <Button Content="Reset" Name="ResetButton" HorizontalAlignment="Left" Margin="39,251,0,0" VerticalAlignment="Top" Width="83" Height="34" Click="ResetButton_Click"/>
-            <Button HorizontalAlignment="Left" Name="SPButton" Content="Start/Pause" Margin="148,251,0,0" VerticalAlignment="Top" Width="83" Height="34" Click="SPButton_Click"/>
-            <TextBlock HorizontalAlignment="Left" Margin="336,255,0,0" TextWrapping="Wrap" Foreground="White" Text="WPM:" VerticalAlignment="Top" Height="25" Width="60" FontSize="20"/>
+            <Button Content="&lt;&lt;" Name="ResetButton" HorizontalAlignment="Left" Margin="10,54,0,0" VerticalAlignment="Top" Width="33" Height="31" Click="ResetButton_Click"/>
+            <Button HorizontalAlignment="Left" Name="SPButton" Content="Start/Pause" Margin="216,253,0,0" VerticalAlignment="Top" Width="83" Height="34" Click="SPButton_Click"/>
+            <TextBlock HorizontalAlignment="Left" Margin="360,55,0,0" TextWrapping="Wrap" Foreground="White" Text="WPM:" VerticalAlignment="Top" Height="25" Width="60" FontSize="20"/>
             <Button Content="Back" Name="BackButton" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="33" Click="BackButton_Click"/>
-            <TextBox HorizontalAlignment="Left" Height="31" Name ="WPM" Margin="401,254,0,0" TextWrapping="Wrap" Foreground="DarkRed" Background="DarkBlue" BorderBrush="DarkBlue" Text="200" Width="62" FontSize="22" VerticalAlignment="Top" TextAlignment="Center" FontWeight="Bold"/>
+            <TextBox HorizontalAlignment="Left" Height="31" Name ="WPM" Margin="425,54,0,0" TextWrapping="Wrap" Foreground="DarkRed" Background="DarkBlue" BorderBrush="DarkBlue" Text="200" Width="62" FontSize="22" VerticalAlignment="Top" TextAlignment="Center" FontWeight="Bold" MaxLength="3"/>
+            <TextBlock HorizontalAlignment="Left" Name="wordCountEnd" Margin="143,55,0,0" TextWrapping="Wrap" Foreground="White" VerticalAlignment="Top" Width="81" Height="30" Text="of " FontSize="20"/>
+            <TextBox HorizontalAlignment="Left" Name="wordCountStart"  Height="31" Margin="71,54,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="67" TextAlignment="Right" TextChanged="wordCountStart_TextChanged" Text="1" FontSize="20" MaxLines="2147483646" MaxLength="5"/>
+            <Button Content="&lt;" HorizontalAlignment="Left" Name="BackwordButton" Margin="48,54,0,0" VerticalAlignment="Top" Width="18" Height="31" Click="BackwordButton_Click"/>
         </Grid>
     </Grid>
 </Window>
