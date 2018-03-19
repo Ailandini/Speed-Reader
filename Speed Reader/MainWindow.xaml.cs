@@ -18,19 +18,28 @@ using System.Timers;
 namespace Speed_Reader
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Speed Reader is a little application that allows individuals to quickly read through text based documents.
+    /// Currently in version 1.2 the user can now make use of a single backward feature. As well as selected a specific word to start with.
+    /// 1.2 also contains a few formatting changes to allow for a more intuitive experience.
+    /// 2.0 will include implementation for Microsoft Word documents and is expected to be released soon.
     /// </summary>
     public partial class MainWindow : Window
     {
+        //This Boolean allows for spaces after periods
         Boolean needSpace = false;
+        //This array holds the words contained within our document.
         String[] fileWords;
+        //Timer initialization for speed reading.
         System.Timers.Timer timer = new System.Timers.Timer();
+        //Default starting position.
         int place = 1;
         public MainWindow()
         {
             InitializeComponent();
         }
 
+        //The Browse button allows users to select their desired file for reading. The filter option restricts file choice to only those
+        //files that can be read in version 1.2
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog files = new OpenFileDialog();
@@ -44,6 +53,9 @@ namespace Speed_Reader
 
         }
 
+        //The Submit button does a myriad of things. But most importantly it opens and reads the file specified previously, and puts it into an
+        //array for easy use. It sets the intial timer and word count values and also changes the visibility of the application from the choosing screen 
+        //to the reading screen.
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -53,9 +65,6 @@ namespace Speed_Reader
                 String fileContent = file.ReadToEnd();
                 fileContent = fileContent.Replace("\n", " ");
                 fileWords = fileContent.Split(' ');
-                //System.IO.StreamWriter outputfile = new System.IO.StreamWriter("C:\\Users\\landini\\Desktop\\output");
-                //outputfile.Write(fileWords);
-                //return;
                 WordPane.Text = fileWords[0];
                 Page2.Visibility = Visibility.Visible;
 
@@ -66,6 +75,7 @@ namespace Speed_Reader
 
                 wordCountEnd.Text = "of " + Convert.ToString(fileWords.Length);
             }
+            //This catch is mostly obsolete due to the filter selection above. However, it's never a bad idea to have extra protection.
             catch (Exception except)
             {
                 FileName.Text = "-Please choose a valid text file-";
@@ -74,6 +84,8 @@ namespace Speed_Reader
             
         }
 
+        //The timer steps through the words of the file at a certain rate determined by the WPM field. It also handles the display of empty following
+        //words that end sentences. This makes the speed reading process feel more natural.
         private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
             this.Dispatcher.Invoke(() =>
@@ -102,6 +114,9 @@ namespace Speed_Reader
             });
         }
 
+        //The Start/Pause Button is likely the most important of all functionalities. The button starts and stops the timer object to allow for client
+        //manipulation of fields. This includes moving through words, changing the Words Per Minute, and returning to the previous screen. It also handles
+        //the locking of these fields while the reader is processing.
         private void SPButton_Click(object sender, RoutedEventArgs e)
         {
             if (fileWords.Length > 0)
@@ -127,6 +142,7 @@ namespace Speed_Reader
 
 
                     }
+                    //In the event the user tries to read at zero words per minute, the WPM field is returned to 200.
                     catch (DivideByZeroException)
                     {
                         WPM.Text = "200";
@@ -135,6 +151,7 @@ namespace Speed_Reader
             }
         }
 
+        //Our reset button returns the speed reader to the start of the text file.
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
             WordPane.Text = fileWords[0];
@@ -146,19 +163,21 @@ namespace Speed_Reader
             wordCountStart.Text = "1";
         }
 
+        //The back button returns the user to the file selection screen.
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             Page2.Visibility = Visibility.Hidden;
             Page1.Visibility = Visibility.Visible;
         }
 
+        //The wordCountStart field refers to which word the reader is currently on. If the reader is paused (or yet to start) the user may change which word
+        //he/she would like to begin with. The WordPane (which displays the current word) is updated immediately when this value is changed. 
+        //This function also maintains that the user does not pick an index that is outside the scope of possible words (returning the count to the final word of 
+        //the file if attempted word is more than the count of words, or to 1 if 0 and lower).
         private void wordCountStart_TextChanged(object sender, TextChangedEventArgs e)
         {
-           
             try
             {
-                
-               
                 place = Convert.ToInt32(wordCountStart.Text);
                 if (place > fileWords.Length)
                 {
@@ -182,6 +201,7 @@ namespace Speed_Reader
             }
         }
 
+        //Lastly the back-word button declines the word count by one, allowing the user to step back and reread the last couple words if they are missed.
         private void BackwordButton_Click(object sender, RoutedEventArgs e)
         {
             wordCountStart.Text = Convert.ToString(Convert.ToInt32(wordCountStart.Text) - 1);
